@@ -17,7 +17,7 @@ public sealed class RedditAdsRequestTests
     [Test]
     [Arguments(null, "https://ads-api.reddit.com/api/v3/me")]
     [Arguments("https://example.test/custom/v3/", "https://example.test/custom/v3/me")]
-    public async Task Requests_use_bearer_token_and_configured_base_url(string? baseUrl, string expectedUrl)
+    public async ValueTask Requests_use_bearer_token_and_configured_base_url(string? baseUrl, string expectedUrl)
     {
         IConfiguration config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
         {
@@ -36,7 +36,7 @@ public sealed class RedditAdsRequestTests
     }
 
     [Test]
-    public async Task Image_creative_asset_deserializes_its_properties()
+    public async ValueTask Image_creative_asset_deserializes_its_properties()
     {
         var json = Encoding.UTF8.GetBytes("{\"name\":\"test image\",\"media\":{\"id\":\"asset-id\"}}");
         var node = await new JsonParseNodeFactory().GetRootParseNodeAsync("application/json", new System.IO.MemoryStream(json));

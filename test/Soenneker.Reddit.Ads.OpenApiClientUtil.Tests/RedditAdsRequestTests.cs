@@ -17,7 +17,7 @@ public sealed class RedditAdsRequestTests
     [Test]
     [Arguments(null, "https://ads-api.reddit.com/api/v3/me")]
     [Arguments("https://example.test/custom/v3/", "https://example.test/custom/v3/me")]
-    public async ValueTask Requests_use_bearer_token_and_configured_base_url(string? baseUrl, string expectedUrl)
+    public async ValueTask Requests_use_bearer_token_and_configured_base_url(string? baseUrl, string expectedUrl, CancellationToken cancellationToken)
     {
         IConfiguration config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
         {
@@ -27,19 +27,19 @@ public sealed class RedditAdsRequestTests
         var handler = new RecordingHandler();
         using var httpClient = new HttpClient(handler);
         await using var util = new RedditAdsOpenApiClientUtil(new HttpClientStub(httpClient), config);
-        var client = await util.Get();
-        if (!ReferenceEquals(client, await util.Get()))
+        var client = await util.Get(cancellationToken: cancellationToken);
+        if (!ReferenceEquals(client, await util.Get(cancellationToken: cancellationToken)))
             throw new Exception("Expected a shared client instance.");
-        await client.Me.GetAsync();
+        await client.Me.GetAsync(cancellationToken: cancellationToken);
         if (handler.Url != expectedUrl || handler.Authorization != "Bearer test-token")
             throw new Exception($"Unexpected request: {handler.Url}, {handler.Authorization}");
     }
 
     [Test]
-    public async ValueTask Image_creative_asset_deserializes_its_properties()
+    public async ValueTask Image_creative_asset_deserializes_its_properties(CancellationToken cancellationToken)
     {
         var json = Encoding.UTF8.GetBytes("{\"name\":\"test image\",\"media\":{\"id\":\"asset-id\"}}");
-        var node = await new JsonParseNodeFactory().GetRootParseNodeAsync("application/json", new System.IO.MemoryStream(json));
+        var node = await new JsonParseNodeFactory().GetRootParseNodeAsync("application/json", new System.IO.MemoryStream(json), cancellationToken: cancellationToken);
         var asset = node.GetObjectValue(ComponentsSchemaPostCreativeAssetsImageCreativeAsset.CreateFromDiscriminatorValue);
         if (asset?.Name != "test image" || asset.Media is null)
             throw new Exception("Image creative assets must deserialize through the generated factory.");

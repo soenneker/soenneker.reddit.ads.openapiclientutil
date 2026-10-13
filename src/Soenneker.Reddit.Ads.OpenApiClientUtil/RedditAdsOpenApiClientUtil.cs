@@ -24,7 +24,7 @@ public sealed class RedditAdsOpenApiClientUtil : IRedditAdsOpenApiClientUtil
         {
             HttpClient httpClient = await httpClientUtil.Get(token).NoSync();
 
-            var apiKey = configuration.GetValueStrict<string>("Reddit:Ads:AccessToken");
+            var apiKey = configuration.GetStringStrict("Reddit:Ads:AccessToken");
             string authHeaderName = configuration["Reddit:Ads:AuthHeaderName"] ?? "Authorization";
             string authHeaderValueTemplate = configuration["Reddit:Ads:AuthHeaderValueTemplate"] ?? "Bearer {token}";
             string authHeaderValue = authHeaderValueTemplate.Replace("{token}", apiKey, StringComparison.Ordinal);

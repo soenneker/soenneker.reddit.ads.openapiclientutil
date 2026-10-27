@@ -46,8 +46,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.Kiota.GenericAuthenticationProvider" Version="4.0.56" />
-        <PackageReference Include="Soenneker.Reddit.Ads.HttpClients" Version="4.0.25" />
-        <PackageReference Include="Soenneker.Reddit.Ads.OpenApiClient" Version="4.0.21" />
+        <PackageReference Include="Soenneker.Kiota.GenericAuthenticationProvider" Version="11.0.58" />
+        <PackageReference Include="Soenneker.Reddit.Ads.HttpClients" Version="11.0.28" />
+        <PackageReference Include="Soenneker.Reddit.Ads.OpenApiClient" Version="11.0.24" />
     </ItemGroup>
 </Project>

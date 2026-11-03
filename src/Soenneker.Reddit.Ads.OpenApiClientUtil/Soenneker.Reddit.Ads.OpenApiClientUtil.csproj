@@ -47,7 +47,7 @@
 
     <ItemGroup>
         <PackageReference Include="Soenneker.Kiota.GenericAuthenticationProvider" Version="11.0.59" />
-        <PackageReference Include="Soenneker.Reddit.Ads.HttpClients" Version="11.0.29" />
+        <PackageReference Include="Soenneker.Reddit.Ads.HttpClients" Version="11.0.30" />
         <PackageReference Include="Soenneker.Reddit.Ads.OpenApiClient" Version="11.0.34" />
     </ItemGroup>
 </Project>
